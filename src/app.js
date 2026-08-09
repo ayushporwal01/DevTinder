@@ -2,16 +2,16 @@ const express = require("express");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Server is running");
-});
-
-app.get("/test", (req, res) => {
+app.use("/test", (req, res) => {
   res.send("Test is running");
 });
 
-app.get("/hello", (req, res) => {
+app.use("/hello", (req, res) => {
   res.send("Hello Hello Hello!");
+});
+
+app.use("/", (req, res) => {
+  res.send("Server is running");
 });
 
 app.listen(7777, () => {
