@@ -8,6 +8,39 @@ const User = require("./models/user");
 
 app.use(express.json());
 
+//API - Get user by email
+app.get("/user", async (req, res) => {
+  const userEmail = req.body.emailId;
+
+  try {
+    const user = await User.find({});
+
+    if (!user) {
+      res.status(404).send("User not found!");
+    } else {
+      res.send(user);
+    }
+  } catch (err) {
+    res.status(400).send("Something went wrong!");
+  }
+});
+
+//Feed API - Get all the users from the DB
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+
+    if (!users.length) {
+      res.status(404).send("User not found!");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res.status(400).send("Something went wrong!");
+  }
+});
+
+//Creates an instance of User model and saves it into the database
 app.post("/signup", async (req, res) => {
   const user = new User(req.body);
   console.log(user);
