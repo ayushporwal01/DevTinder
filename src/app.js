@@ -71,7 +71,7 @@ app.put("/user", async (req, res) => {
   const data = req.body;
 
   try {
-    const user = await User.findOneAndReplace({_id: userId}, data);
+    const user = await User.findOneAndReplace({ _id: userId }, data);
     res.send("Entirely updated user successfully");
   } catch (err) {
     res.status(400).send("Something went wrong!");
@@ -86,10 +86,11 @@ app.patch("/user", async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(userId, data, {
       returnDocument: "before",
+      runValidators: true,
     });
     res.send("Updated user successfully");
   } catch (err) {
-    res.status(400).send("Something went wrong!");
+    res.status(400).send("UPDATE FAILED: " + err.message);
   }
 });
 
