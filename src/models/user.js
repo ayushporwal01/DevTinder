@@ -13,6 +13,8 @@ const userSchema = new Schema(
     lastName: {
       type: String,
       trim: true,
+      minLength: "1",
+      maxLength: "50",
     },
     emailId: {
       type: String,
@@ -24,6 +26,8 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      minLength: 8,
+      maxLength: 15,
       unique: true,
       trim: true,
     },
@@ -41,6 +45,8 @@ const userSchema = new Schema(
     },
     about: {
       type: String,
+      minLength: 0,
+      maxLength: 200,
       default: "This is the default about of user",
     },
     photoUrl: {

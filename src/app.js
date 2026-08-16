@@ -66,8 +66,8 @@ app.delete("/user", async (req, res) => {
 });
 
 //Entirely updates a user by given filter
-app.put("/user", async (req, res) => {
-  const userId = req.body.userId;
+app.put("/user/:userId", async (req, res) => {
+  const userId = req.params?.userId;
   const data = req.body;
 
   try {
@@ -79,11 +79,31 @@ app.put("/user", async (req, res) => {
 });
 
 //Partially updates a user by id
-app.patch("/user", async (req, res) => {
-  const userId = req.body.userId;
+app.patch("/user/:userId", async (req, res) => {
+  const userId = req.params?.userId;
   const data = req.body;
 
   try {
+    const ALLOWED_UPDATES = [
+      "firstName",
+      "lastName",
+      "password",
+      "about",
+      "photoUrl",
+      "skills",
+    ];
+    const isUpdateAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k),
+    );
+
+    if (!isUpdateAllowed) {
+      throw new Error("Update not allowed");
+    }
+
+    if (data.skills?.length > 10) {
+      throw new Error("Skills can not be more than 10");
+    }
+
     const user = await User.findByIdAndUpdate(userId, data, {
       returnDocument: "before",
       runValidators: true,
