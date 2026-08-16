@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const validator = require("validator");
+
 const userSchema = new Schema(
   {
     firstName: {
@@ -22,6 +24,15 @@ const userSchema = new Schema(
       lowercase: true,
       unique: true,
       trim: true,
+      validate(value) {
+        if (
+          !validator.isEmail(value, {
+            host_whitelist: ["gmail.com"],
+          })
+        ) {
+          throw new Error("Invalid email address " + value);
+        }
+      },
     },
     password: {
       type: String,
@@ -30,6 +41,11 @@ const userSchema = new Schema(
       maxLength: 15,
       unique: true,
       trim: true,
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Enter a strong password");
+        }
+      },
     },
     age: {
       type: Number,
@@ -53,6 +69,12 @@ const userSchema = new Schema(
       type: String,
       default:
         "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
+
+      validate(value) {
+        if (!validator.isURL(value)) {
+          throw new Error("Invalid photo URL");
+        }
+      },
     },
     skills: {
       type: [String],

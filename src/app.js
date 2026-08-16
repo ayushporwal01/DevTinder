@@ -91,6 +91,7 @@ app.patch("/user/:userId", async (req, res) => {
       "about",
       "photoUrl",
       "skills",
+      "emailId",
     ];
     const isUpdateAllowed = Object.keys(data).every((k) =>
       ALLOWED_UPDATES.includes(k),
