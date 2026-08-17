@@ -38,7 +38,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minLength: 8,
-      maxLength: 15,
+      maxLength: 60,
       unique: true,
       trim: true,
       validate(value) {
