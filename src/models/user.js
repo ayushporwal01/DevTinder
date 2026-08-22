@@ -67,7 +67,7 @@ const userSchema = new Schema(
       maxLength: 200,
       default: "This is the default about of user",
     },
-    photoUrl: {
+    photoURL: {
       type: String,
       default:
         "https://toppng.com/uploads/preview/circled-user-icon-user-pro-icon-11553397069rpnu1bqqup.png",
